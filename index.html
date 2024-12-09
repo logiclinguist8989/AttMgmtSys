@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Attendance Management System</h1>
+    </header>
+
+    <main>
+        <section id="student">
+            <h2>Student Information</h2>
+            <div class="form-container">
+                <input type="text" id="student-id" placeholder="Student ID">
+                <input type="text" id="student-name" placeholder="Name">
+                <input type="date" id="student-dob">
+                <select id="student-gender">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <input type="text" id="student-class" placehold  er="Class">
+                <button class="btn" onclick="addStudent()">Add Student</button>
+                <input type="text" id="search-student" placeholder="Search Students" onkeyup="searchTable('student', 'search-student')">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="attendance">
+            <h2>Attendance Records</h2>
+            <div class="form-container">
+                <input type="text" id="attendance-id" placeholder="Attendance ID">
+                <input type="date" id="attendance-date">
+                <select id="attendance-status">
+                    <option value="" disabled selected>Select Status</option>
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                    <option value="Late">Late</option>
+                </select>
+                <input type="text" id="attendance-student" placeholder="Student Name">
+                <input type="text" id="attendance-subject" placeholder="Subject">
+                <input type="text" id="attendance-teacher" placeholder="Teacher">
+                <button class="btn" onclick="addAttendance()">Add Attendance</button>
+                <input type="text" id="search-attendance" placeholder="Search Attendance" onkeyup="searchTable('attendance', 'search-attendance')">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Attendance ID</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>Teacher</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Attendance Management System</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
