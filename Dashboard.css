@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendify Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f9fafc;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #ffffff;
+            width: 220px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .menu {
+            list-style-type: none;
+        }
+
+        .menu li {
+            margin: 15px 0;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .menu a.active {
+            color: #0056e0;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 220px;
+            padding: 20px;
+            background: #f5f7fa;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info span {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            border-radius: 50%;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 20px;
+            flex: 1 1 calc(50% - 20px);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-width: 280px;
+        }
+
+        .card h3 {
+            font-size: 28px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .reports {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reports h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .cards {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .card {
+                flex: 1 1 100%;
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-info {
+                margin-top: 10px;
+            }
+
+            .menu li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="logo">Attendify</h2>
+            <ul class="menu">
+                <li>TRACK</li>
+                <li><a href="#">Attendance Sheet</a></li>
+                <li>ANALYZE</li>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Report</a></li>
+                <li>MANAGE</li>
+                <li><a href="#">Student</a></li>
+                <li>OTHERS</li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="user-info">
+                    <span>Ayush</span>
+                    <img src="https://via.placeholder.com/30" alt="User" class="user-avatar">
+                </div>
+            </header>
+
+            <!-- Dashboard Cards -->
+            <section class="cards">
+                <div class="card">
+                    <p>Present | Today</p>
+                    <h3>145</h3>
+                    <p><strong>12%</strong> increase</p>
+                </div>
+                <div class="card">
+                    <p>Absent | Today</p>
+                    <h3>145</h3>
+                    <p><strong>12%</strong> increase</p>
+                </div>
+                <div class="card">
+                    <p>Attendance | This Month</p>
+                    <h3>145</h3>
+                    <p><strong>12%</strong> increase</p>
+                </div>
+                <div class="card">
+                    <p>Attendance Report | This Month</p>
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Reports Chart -->
+            <section class="reports">
+                <h2>Reports | Today</h2>
+                <canvas id="lineChart"></canvas>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Line Chart Configuration
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        const lineChart = new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['01:00', '02:00', '03:00', '04:00', '05:00'],
+                datasets: [
+                    { label: 'Present', data: [30, 40, 50, 70, 90], borderColor: 'blue', fill: false },
+                    { label: 'Absent', data: [20, 30, 40, 35, 45], borderColor: 'green', fill: false },
+                    { label: 'Others', data: [10, 15, 20, 30, 25], borderColor: 'orange', fill: false }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Radar Chart Configuration
+        const radarCtx = document.getElementById('radarChart').getContext('2d');
+        const radarChart = new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Sales', 'Marketing', 'Development', 'Customer Support', 'Accounting'],
+                datasets: [
+                    { label: 'Allocated Budget', data: [50, 70, 60, 30, 90], borderColor: 'blue', fill: false },
+                    { label: 'Actual Spending', data: [45, 60, 55, 35, 85], borderColor: 'green', fill: false }
+                ]
+            },
+            options: { responsive: true }
+        });
+    </script>
+</body>
+</html>
